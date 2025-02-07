@@ -52,6 +52,9 @@ Enhanced BurpGPT 是一个 Burp Suite 插件，它能帮助你使用 AI（人工
 ### 配置标签栏
 ![image](https://github.com/user-attachments/assets/aa5402ef-0064-4108-a864-6568159e6927)
 
+### 分析中截图
+![image](https://github.com/user-attachments/assets/665db16b-9aeb-40f2-ad35-0d8f8a7471aa)
+
 
 ### 分析结果展示
 ![image](https://github.com/user-attachments/assets/06b1b75c-958b-47ba-b40f-74df9d1d8343)

@@ -18,7 +18,7 @@ Enhanced BurpGPT 是一个 Burp Suite 插件，它能帮助你使用 AI（人工
 ### Google
 - **Gemini Pro**
   - 优秀的代码分析能力
-- **gemini-2.0-flash-thinking-exp**
+- **Gemini-2.0-flash-thinking-exp**
   - 更强大的推理能力
   - 更好的多模态支持
 

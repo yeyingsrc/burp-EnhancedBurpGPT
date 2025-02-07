@@ -30,7 +30,12 @@ Enhanced BurpGPT 是一个 Burp Suite 插件，它能帮助你使用 AI（人工
   - 优化的对话体验
   - 更好的中文支持
 
-### Claude
+### Anthropic
+- **claude-3.5-sonnet**
+  - 优秀的理解能力
+  - 优秀的代码能力
+- **Claude 3 Haiku**
+  - 更快的体验
 
 ### 几乎所有模型
 

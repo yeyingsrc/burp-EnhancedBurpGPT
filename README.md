@@ -92,6 +92,7 @@ Enhanced BurpGPT 是一个 Burp Suite 插件，它能帮助你使用 AI（人工
    - 填写 `API URL`（例如：`https://api.openai.com/v1/chat/completions`）
    - 填写你的 `API Key`
    - 选择或输入要使用的 `Model`（例如：`gpt-3.5-turbo`）
+   - 注意，获取模型默认访问的是/v1/models，对话访问的是/v1/chat/completions
 
 ### 第二步：高级配置
 1. **设置超时和长度限制**

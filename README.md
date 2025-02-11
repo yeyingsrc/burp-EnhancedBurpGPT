@@ -1,4 +1,5 @@
 # Enhanced BurpGPT 使用指南 🚀
+觉得好用请star~
 
 ## 这是什么？🤔
 Enhanced BurpGPT 是一个 Burp Suite 插件，它能帮助你使用 AI（人工智能）来分析 Web 应用的安全问题。简单来说，当你测试网站时，你可以在指定的请求响应对，点击send to gpt，交由AI分析，找出潜在的安全漏洞。

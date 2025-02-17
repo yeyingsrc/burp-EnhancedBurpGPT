@@ -4,6 +4,12 @@
 ## 这是什么？🤔
 Enhanced BurpGPT 是一个 Burp Suite 插件，它能帮助你使用 AI（人工智能）来分析 Web 应用的安全问题。简单来说，当你测试网站时，你可以在指定的请求响应对，点击send to gpt，交由AI分析，找出潜在的安全漏洞。
 
+## 警告⚠！看到ISSUE有很多小伙伴使用说无法发送/接受响应，经测试，大部分问题均因没有正确配置API接口和密钥，下面是主流厂商的API接口配置规范
+### OpenAI
+    API URL：https://api.openai.com/v1/chat/completions
+### DeepSeek
+    API URL：https://api.deepseek.com/v1/chat/completions
+  
 ## 支持的模型厂家（仅列举部分厂家和模型）
 
 ### OpenAI

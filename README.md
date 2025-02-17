@@ -261,7 +261,7 @@ Deepseek分析结果展示：
    - 改进内存使用效率
    
 ## Doing
-代理功能开发中。。。。
+代理功能开发中。。。。。
 ![image](https://github.com/user-attachments/assets/5a4db1b9-ca64-444d-9f7e-f56a30b4eee4)
 
 - [ ] 加入代理选项

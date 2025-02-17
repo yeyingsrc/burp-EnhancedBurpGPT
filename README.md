@@ -9,6 +9,11 @@ Enhanced BurpGPT 是一个 Burp Suite 插件，它能帮助你使用 AI（人工
     API URL：https://api.openai.com/v1/chat/completions
 ### DeepSeek
     API URL：https://api.deepseek.com/v1/chat/completions
+### 硅基流动siliconflow
+    API URL：https://api.siliconflow.cn/v1/chat/completions
+### Ollama
+    API URL：http://ip:port/v1/chat/completions
+    注意，Ollama的密钥要填写自己设置的密钥或者默认的密钥！
   
 ## 支持的模型厂家（仅列举部分厂家和模型）
 

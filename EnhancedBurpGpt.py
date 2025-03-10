@@ -248,7 +248,7 @@ Please identify any security issues and suggest fixes."""
                 # 发送请求
                 response = urllib2.urlopen(request, timeout=self.timeout_seconds)
                 response_data = response.read()
-                response_text = response_data.decode('utf-8')
+                response_text = str(response_data)
                 
                 # 解析JSON响应
                 models_data = json.loads(response_text)
@@ -432,16 +432,10 @@ Please identify any security issues and suggest fixes."""
                     timestamp = java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(java.util.Date())
                     filename = "gpt_analysis_{}.txt".format(timestamp)
                     
-                    # 使用 OutputStreamWriter 来指定编码
-                    from java.io import FileOutputStream, OutputStreamWriter, BufferedWriter
-                    from java.nio.charset import StandardCharsets
+                    # 使用更简单的文件写入方式
+                    from java.io import FileWriter, BufferedWriter
                     
-                    writer = BufferedWriter(
-                        OutputStreamWriter(
-                            FileOutputStream(filename),
-                            StandardCharsets.UTF_8
-                        )
-                    )
+                    writer = BufferedWriter(FileWriter(filename))
                     
                     try:
                         # 写入导出信息头
@@ -602,7 +596,11 @@ Please identify any security issues and suggest fixes."""
         if not content:
             return ""
             
-        content_str = self._helpers.bytesToString(content)
+        try:
+            content_str = self._helpers.bytesToString(content)
+        except:
+            # 如果helpers方法失败，回退到str()
+            content_str = str(content)
         
         if len(content_str) <= max_length:
             return content_str
@@ -688,30 +686,22 @@ Please identify any security issues and suggest fixes."""
             response_data = response.read()
             
             try:
-                # 尝试不同的编码方式
-                for encoding in ['utf-8', 'gbk', 'gb2312', 'iso-8859-1']:
-                    try:
-                        response_text = response_data.decode(encoding)
-                        # 如果成功解码，就使用这个结果
-                        break
-                    except:
-                        continue
+                # 修改这里：直接使用str()而不是尝试各种解码方式
+                response_text = str(response_data)
                 
                 # 解析JSON
                 result = json.loads(response_text)
                 return GPTResponse(result)
                 
             except Exception as decode_error:
-                # 如果所有编码都失败了，打印原始数据的十六进制
-                self.log("[-] Raw response (hex): " + response_data.hex())
+                # 如果解析失败，打印原始数据信息
+                self.log("[-] Raw response: " + str(response_data))
                 raise decode_error
             
         except urllib2.HTTPError as e:
             error_body = e.read()
-            try:
-                error_text = error_body.decode('utf-8')
-            except:
-                error_text = str(error_body)
+            # 修改这里：改用str()替代decode
+            error_text = str(error_body)
             self.log("[-] HTTP Error Response: " + error_text)
             raise Exception("Error calling GPT API: " + str(e))
         except Exception as e:

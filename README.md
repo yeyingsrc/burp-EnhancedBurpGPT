@@ -19,6 +19,8 @@ Enhanced BurpGPT 是一个 Burp Suite 插件，它能帮助你使用 AI（人工
 ### 2025-03-10
 - **EnhancedBurpGPT2.0**
   - 修复**Error fetching models: cannot make memory view because object does not have thebuffer interface**此类通用错误。
+    ![image](https://github.com/user-attachments/assets/c3718417-1ccf-4c40-8fad-dbbbbfa4a09c)
+
   
 ## 支持的模型厂家（仅列举部分厂家和模型）
 

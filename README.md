@@ -14,6 +14,11 @@ Enhanced BurpGPT 是一个 Burp Suite 插件，它能帮助你使用 AI（人工
 ### Ollama
     API URL：http://ip:port/v1/chat/completions
     注意，Ollama的密钥要填写自己设置的密钥或者默认的密钥！
+
+## 更新日志
+### 2025-03-10
+- **EnhancedBurpGPT2.0**
+  - 修复**Error fetching models: cannot make memory view because object does not have thebuffer interface**此类通用错误。
   
 ## 支持的模型厂家（仅列举部分厂家和模型）
 

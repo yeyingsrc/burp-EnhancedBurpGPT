@@ -5,7 +5,7 @@ from burp import IContextMenuFactory
 from burp import IScannerCheck
 from burp import ITab
 from javax.swing import JMenuItem, JPanel, JTextArea, JScrollPane, BoxLayout, JTabbedPane, JDialog, JProgressBar, JLabel
-from javax.swing import JButton, JTextField, JOptionPane, JSplitPane
+from javax.swing import JButton, JTextField, JOptionPane, JSplitPane, JCheckBox
 from java.awt import BorderLayout, Dimension, Color
 from java.io import PrintWriter
 from java.util import ArrayList
@@ -25,6 +25,19 @@ from javax.swing.event import ListSelectionListener
 from javax.swing import BorderFactory, Box
 from java.awt import GridBagLayout, GridBagConstraints, Insets
 
+# 添加自定义SSL上下文处理器
+class TrustAllSSLContext:
+    def __init__(self):
+        pass
+        
+    @staticmethod
+    def create():
+        # 创建一个不验证证书的SSL上下文
+        trust_all_context = ssl.create_default_context()
+        trust_all_context.check_hostname = False
+        trust_all_context.verify_mode = ssl.CERT_NONE
+        return trust_all_context
+
 class BurpExtender(IBurpExtender, IContextMenuFactory, IScannerCheck, ITab):
     def registerExtenderCallbacks(self, callbacks):
         self._callbacks = callbacks
@@ -36,6 +49,7 @@ class BurpExtender(IBurpExtender, IContextMenuFactory, IScannerCheck, ITab):
         self.model = "Please select or enter the model name to use"
         self.max_tokens = 3072
         self.timeout_seconds = 60  # 设置超时时间
+        self.disable_ssl_verification = False  # 默认启用SSL验证
         
         # 添加默认长度限制
         self.max_request_length = 1000
@@ -153,6 +167,18 @@ Please identify any security issues and suggest fixes."""
         constraints.weightx = 0.8
         api_panel.add(model_panel, constraints)
         
+        # 添加SSL验证复选框
+        constraints.gridx = 0
+        constraints.gridy = 3
+        constraints.weightx = 0.2
+        api_panel.add(JLabel("SSL Options:"), constraints)
+        
+        constraints.gridx = 1
+        constraints.weightx = 0.8
+        self.disable_ssl_check = JCheckBox("Disable SSL Certificate Validation", self.disable_ssl_verification)
+        self.disable_ssl_check.setToolTipText("Enable this if you encounter SSL certificate issues (Not recommended for production use)")
+        api_panel.add(self.disable_ssl_check, constraints)
+        
         # 限制设置面板
         limits_panel = JPanel(GridBagLayout())
         limits_panel.setBorder(BorderFactory.createTitledBorder("Limits & Timeouts"))
@@ -245,8 +271,20 @@ Please identify any security issues and suggest fixes."""
                     headers=headers
                 )
                 
+                # 获取SSL验证设置
+                disable_ssl = self.disable_ssl_check.isSelected()
+                
                 # 发送请求
-                response = urllib2.urlopen(request, timeout=self.timeout_seconds)
+                if disable_ssl:
+                    self.log("[*] SSL certificate validation is disabled for models fetch")
+                    # 创建自定义的SSL上下文
+                    ssl_context = TrustAllSSLContext.create()
+                    # 使用自定义SSL上下文发送请求
+                    response = urllib2.urlopen(request, context=ssl_context, timeout=self.timeout_seconds)
+                else:
+                    # 标准请求方式，使用默认SSL验证
+                    response = urllib2.urlopen(request, timeout=self.timeout_seconds)
+                
                 response_data = response.read()
                 response_text = str(response_data)
                 
@@ -284,6 +322,7 @@ Please identify any security issues and suggest fixes."""
                 self.timeout_seconds = int(self.timeout_field.getText())
                 self.max_request_length = int(self.req_length_field.getText())
                 self.max_response_length = int(self.resp_length_field.getText())
+                self.disable_ssl_verification = self.disable_ssl_check.isSelected()  # 获取SSL验证设置
                 
                 # 验证配置
                 if not self.api_url or not self.api_key or not self.model:
@@ -298,6 +337,7 @@ Please identify any security issues and suggest fixes."""
                 self.log("  - API URL: {}".format(self.api_url))
                 self.log("  - Model: {}".format(self.model))
                 self.log("  - API Key: {}".format("*" * len(self.api_key)))
+                self.log("  - SSL Verification: {}".format("Disabled" if self.disable_ssl_verification else "Enabled"))
                 
             except Exception as e:
                 JOptionPane.showMessageDialog(None, "Error saving configuration: " + str(e))
@@ -308,7 +348,7 @@ Please identify any security issues and suggest fixes."""
                 "Are you sure you want to reset all settings to default values?",
                 "Confirm Reset",
                 JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION:
-                self.url_field.setText("https://openai.com/v1/chat/completions")
+                self.url_field.setText("https://api.openai.com/v1/chat/completions")
                 self.key_field.setText("Please enter your API key")
                 self.model_combo.removeAllItems()
                 self.model_combo.addItem("gpt-4o")
@@ -316,6 +356,7 @@ Please identify any security issues and suggest fixes."""
                 self.timeout_field.setText("60")
                 self.req_length_field.setText("1000")
                 self.resp_length_field.setText("2000")
+                self.disable_ssl_check.setSelected(False)  # 重置SSL验证设置
                 self.prompt_area.setText(self.get_default_prompt())
         
         save_button = JButton("Save Configuration")
@@ -679,8 +720,16 @@ Please identify any security issues and suggest fixes."""
                 headers=headers
             )
             
-            # 设置超时
-            response = urllib2.urlopen(request, timeout=self.timeout_seconds)
+            # 处理SSL验证
+            if self.disable_ssl_verification:
+                self.log("[*] SSL certificate validation is disabled")
+                # 创建自定义的SSL上下文
+                ssl_context = TrustAllSSLContext.create()
+                # 使用自定义SSL上下文发送请求
+                response = urllib2.urlopen(request, context=ssl_context, timeout=self.timeout_seconds)
+            else:
+                # 标准请求方式，使用默认SSL验证
+                response = urllib2.urlopen(request, timeout=self.timeout_seconds)
             
             # 读取原始响应数据
             response_data = response.read()

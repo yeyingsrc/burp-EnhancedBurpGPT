@@ -16,6 +16,12 @@ Enhanced BurpGPT 是一个 Burp Suite 插件，它能帮助你使用 AI（人工
     注意，Ollama的密钥要填写自己设置的密钥或者默认的密钥！
 
 ## 更新日志
+### 2025-04-17
+- **EnhancedBurpGPT2.0 SSL证书验证修复**
+  ![image](https://github.com/user-attachments/assets/d99c0921-da4b-4b18-b50f-2960501a4cd1)
+  - 添加了SSL证书验证控制选项，解决"java.security.cert.CertificateException: No certificate data found"错误
+  - 在API设置面板中增加了"禁用SSL证书验证"选项，可以解决某些网络环境下的证书验证失败问题
+  - 此设置可以帮助解决通过代理、公司网络或SSL检查设备连接API时出现的证书错误
 ### 2025-03-10
 - **EnhancedBurpGPT2.0**
   - 修复**Error fetching models: cannot make memory view because object does not have thebuffer interface**此类通用错误。

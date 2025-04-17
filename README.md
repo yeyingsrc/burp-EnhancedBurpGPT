@@ -17,7 +17,7 @@ Enhanced BurpGPT 是一个 Burp Suite 插件，它能帮助你使用 AI（人工
 
 ## 更新日志
 ### 2025-04-17
-- **EnhancedBurpGPT2.0 SSL证书验证修复**
+- **EnhancedBurpGPT2.5 SSL证书验证修复**
   ![image](https://github.com/user-attachments/assets/d99c0921-da4b-4b18-b50f-2960501a4cd1)
   - 添加了SSL证书验证控制选项，解决"java.security.cert.CertificateException: No certificate data found"错误
   - 在API设置面板中增加了"禁用SSL证书验证"选项，可以解决某些网络环境下的证书验证失败问题

@@ -1,5 +1,5 @@
 # Enhanced BurpGPT 使用指南 🚀
-觉得好用请star~
+2025-10-21，所有功能已开发/测试完成，觉得好用请star~
 
 ## 这是什么？🤔
 Enhanced BurpGPT 是一个 Burp Suite 插件，它能帮助你使用 AI（人工智能）来分析 Web 应用的安全问题。简单来说，当你测试网站时，你可以在指定的请求响应对，点击send to gpt，交由AI分析，找出潜在的安全漏洞。
@@ -16,6 +16,14 @@ Enhanced BurpGPT 是一个 Burp Suite 插件，它能帮助你使用 AI（人工
     注意，Ollama的密钥要填写自己设置的密钥或者默认的密钥！
 
 ## 更新日志
+### 2025-10-21
+- **EnhancedBurpGPT3.0 功能重塑**
+- <img width="1584" height="874" alt="image" src="https://github.com/user-attachments/assets/283c9cf2-524b-455c-bb4a-8b14ebafb65f" />
+
+ - 代理功能修复
+ - 支持自定义API供应商
+ - 支持智能截断（也可自定义截断值）
+ - 其他功能请自行体验
 ### 2025-04-17
 - **EnhancedBurpGPT2.5 SSL证书验证修复**
   ![image](https://github.com/user-attachments/assets/d99c0921-da4b-4b18-b50f-2960501a4cd1)
@@ -28,7 +36,7 @@ Enhanced BurpGPT 是一个 Burp Suite 插件，它能帮助你使用 AI（人工
     ![image](https://github.com/user-attachments/assets/c3718417-1ccf-4c40-8fad-dbbbbfa4a09c)
 
   
-## 支持的模型厂家（仅列举部分厂家和模型）
+## 支持的模型厂家（目前已支持所有市面所有主流模型）
 
 ### OpenAI
 - **GPT-3.5-turbo**
@@ -274,8 +282,7 @@ Deepseek分析结果展示：
    - 改进内存使用效率
    
 ## Doing
-代理功能开发中。。。。。
-![image](https://github.com/user-attachments/assets/5a4db1b9-ca64-444d-9f7e-f56a30b4eee4)
+    所有功能已开发完成。
 
 - [ ] 加入代理选项
 
